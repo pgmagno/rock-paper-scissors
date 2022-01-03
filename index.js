@@ -115,8 +115,8 @@ function imageSelector(playerMove, cpuMove) {
     const playerChoice = document.querySelector(".player-choice");
     const cpuChoice = document.querySelector(".cpu-choice");
 
-    playerChoice.src = "./images/" + playerMove + ".png";
-    cpuChoice.src = "./images/" + cpuMove + ".png";
+    playerChoice.src = "/images/" + playerMove + ".png";
+    cpuChoice.src = "/images/" + cpuMove + ".png";
 }
 
 function announceWinner() {
