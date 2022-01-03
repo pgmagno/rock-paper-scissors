@@ -1,42 +1,66 @@
 const movesArray = ['Rock','Paper','Scissors'];
 
+const resultToDisplay = document.querySelector('.result');
+const roundToDiplay = document.querySelector('.current-round');
+const humanWinsToDisplay = document.querySelector('.human-wins');
+const cpuWinsToDisplay = document.querySelector('.cpu-wins');
+const tiesToDisplay = document.querySelector('.ties');
+
+
+let cpuWins = 0;
+let humanWins = 0;
+let numberOfRounds = 0;
+let ties = 0;
+
+function reset () {
+    cpuWins = 0;
+    humanWins = 0;
+    ties = 0;
+    numberOfRounds = 0;
+
+    resultToDisplay.textContent = 'Ready to Play!';
+    tiesToDisplay.textContent = ties;
+    humanWinsToDisplay.textContent = humanWins;
+    cpuWinsToDisplay.textContent = cpuWins;
+    roundToDiplay.textContent = '-';
+}
+
+const resetBtn = document.querySelector(".reset");
+
+resetBtn.addEventListener('click', reset);
+
 function computerMove() {
     return movesArray[Math.floor(Math.random() * 3)];
 }
 
+const rock = document.querySelector(".rock");
+const paper = document.querySelector(".paper");
+const scissors = document.querySelector(".scissors");
 
-function playerMove () {
-    let playerMove;
-    getOut = false;
-    while(true) {
+rock.addEventListener('click', () => {
+        const playerMovement = movesArray[0];
+        const cpuMovement = computerMove();
+        gameRound(playerMovement, cpuMovement);
+        imageSelector(playerMovement,cpuMovement);
 
-        playerMove = prompt("Make your move (Rock, Paper or Scissors) or Type Exit: ",);
+});
 
-        if (playerMove === null) {
-            playerMove = 'Exit';
-        }
+paper.addEventListener('click', () => {
+        const playerMovement = movesArray[1];
+        const cpuMovement = computerMove();
+        gameRound(playerMovement, cpuMovement);
+        imageSelector(playerMovement,cpuMovement);
 
-        playerMove = playerMove.toLowerCase();
-        playerMove = playerMove.replace(playerMove[0], playerMove[0].toUpperCase());
+});
 
-        if (playerMove !== movesArray[0] && playerMove !== movesArray[1] && playerMove !== movesArray[2]) {
-            if (playerMove === "Exit") {
-                getOut = true;
-                playerMove = 'Game Cancelled';
-                break;
-            } else {
-                alert("Invalid Move! Try again.");
-            }
-        } else {
-            break;
-        }
-    }
-    if (getOut) {
-        alert('Game Over');
-    }
-    return playerMove;
+scissors.addEventListener('click', () => {
+        const playerMovement = movesArray[2];
+        const cpuMovement = computerMove();
+        gameRound(playerMovement, cpuMovement);
+        imageSelector(playerMovement,cpuMovement);
 
-}
+});
+
 
 function gameRound (playerMove, computerMove) {
 
@@ -61,66 +85,53 @@ function gameRound (playerMove, computerMove) {
 
     }
 
-    console.log('Human Player chose: '   , playerMove);
-    console.log('Computer Player chose: ', computerMove);
+    numberOfRounds++;
+    roundToDiplay.textContent = numberOfRounds;
 
     if (result === 'Tie') {
-        return "Tie";
+        ties++;
+        resultToDisplay.textContent = 'It\'s a Tie';
+        tiesToDisplay.textContent = ties;
+
     } else if (result === playerMove) {
-        return 'Human';
+
+        humanWins++;
+        humanWinsToDisplay.textContent = humanWins;
+        resultToDisplay.textContent = 'You win!';
+
     } else {
-        return 'Computer';
+        cpuWins++;
+        cpuWinsToDisplay.textContent = cpuWins;
+        resultToDisplay.textContent = 'Computer Wins!';
+
+    }
+
+    if(numberOfRounds === 5) {
+        announceWinner();
     }
 }
 
-const numberOfRounds = parseInt(prompt("How many rounds do you want to play?"));
+function imageSelector(playerMove, cpuMove) {
+    const playerChoice = document.querySelector(".player-choice");
+    const cpuChoice = document.querySelector(".cpu-choice");
 
-function gameMatch (numberOfRounds){
-
-    let count = 0;
-    let humanWins = 0;
-    let computerWins = 0;
-    let result;
-    let ties = 0;
-
-
-    while(count < numberOfRounds) {
-        console.log("Round ", count + 1);
-        result = gameRound(playerMove(), computerMove());
-
-        switch (result) {
-            case 'Human':
-                console.log('Human Player Wins');
-                humanWins++;
-                break;
-            case 'Computer':
-                console.log('Computer Wins');
-                computerWins++;
-                break;
-            case 'Tie':
-                console.log('It\'s a tie!');
-                ties++;
-                break;
-
-            default:
-                console.log("There was a problem");
-        }
-
-        count++;
-    }
-
-    console.log("Final Result: ");
-    console.log("Human: ", humanWins);
-    console.log("Computer: ", computerWins);
-    console.log("Ties: ", ties);
-
-    if (humanWins === computerWins) {
-        alert("It\'s a Tie!");
-    } else if (humanWins > computerWins) {
-        alert("Human player wins!");
-    } else {
-        alert('Computer wins!');
-    }
+    playerChoice.src = "./images/" + playerMove + ".png";
+    cpuChoice.src = "./images/" + cpuMove + ".png";
 }
 
-gameMatch(numberOfRounds);
+function announceWinner() {
+
+    const finalWinner = document.createElement('h1');
+    finalWinner.classList.add('finalWinner');
+    const resultsDisplayMainContainer = document.querySelector('.results-display');
+
+    resultsDisplayMainContainer.appendChild(finalWinner);
+
+    if(humanWins > cpuWins) {
+        finalWinner.textContent = 'The Final winner is: Human!';
+    } else if (cpuWins > humanWins) {
+        finalWinner.textContent = 'The Final winner is: Computer!';
+    } else {
+        finalWinner.textContent = 'Nobody Wins!';
+    }
+}

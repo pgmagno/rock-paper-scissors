@@ -4,14 +4,55 @@
 <head>
     <meta charset="utf-8">
     <title>Rock, Paper, Scissors</title>
+    <script src="./index.js" charset="utf-8" defer></script>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
 
-    <h1>Press F12 to open the Console and see the results!</h1>
+    <div class="title-bar whole-app">
+        <h1>Rock Paper Scissors</h1>
+        <img src="./images/reset.png" alt="" class="reset">
+    </div>
 
+    <div class="board whole-app">
+        <div class="movebox human-player">
+            <p>Human Player</p>
+            <img src="" alt="" class='player-choice'>
+        </div>
 
-    <script src="./index.js" charset="utf-8"></script>
+        <p class="versus">❌</p>
+
+        <div class="movebox cpu-player">
+            <p>CPU Player</p>
+            <img src="" alt="" class='cpu-choice'>
+        </div>
+    </div>
+
+    <div class="results-display">
+        <p class='round'>Round <span class="current-round">-</span></p>
+        <table>
+            <tr>
+                <th>Human</th>
+                <th>Ties</th>
+                <th>CPU</th>
+            </tr>
+            <tr>
+                <td class="human-wins">0</td>
+                <td class="ties">0</td>
+                <td class="cpu-wins">0</td>
+            </tr>
+        </table>
+
+        <h2 class='result'>Ready to Play!</h2>
+    </div>
+
+    <div class="controls whole-app">
+        <img class="control-icon rock" src="./images/rock.png" alt="">
+        <img class="control-icon paper" src="./images/paper.png" alt="">
+        <img class="control-icon scissors" src="./images/scissors.png" alt="">
+    </div>
+
 </body>
 
 </html>
