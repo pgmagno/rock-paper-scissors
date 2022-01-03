@@ -115,8 +115,12 @@ function imageSelector(playerMove, cpuMove) {
     const playerChoice = document.querySelector(".player-choice");
     const cpuChoice = document.querySelector(".cpu-choice");
 
-    playerChoice.src = "/images/" + playerMove + ".png";
-    cpuChoice.src = "/images/" + cpuMove + ".png";
+    const finalstringPlayer = playerMove.toLocaleLowerCase();
+    const finalStringCpu = cpuMove.toLocaleLowerCase();
+
+
+    playerChoice.src = "./images/" + finalstringPlayer + ".png";
+    cpuChoice.src = "./images/" + finalStringCpu + ".png";
 }
 
 function announceWinner() {
